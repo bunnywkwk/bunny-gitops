@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bunny-api
+spec:
+  # WHY REPLICAS 2: Because the Python API is completely stateless, we can safely run multiple copies!
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bunny-api
+  template:
+    metadata:
+      labels:
+        app: bunny-api
+    spec:
+      containers:
+      - name: api
+        image: bunnywkwk/bunny-app:staging-placeholder
+        ports:
+        - containerPort: 8000
+        env:
+        # WATCH OUT: If the Python app starts before the Vault password is ready, it will crash.
+        # It will automatically restart and succeed once the secret finally appears.
+        - name: DATABASE_URL
+          value: "postgresql://postgres:$(POSTGRES_PASSWORD)@postgres:5432/postgres"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bunny-api
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8000
+    nodePort: 30080
+  selector:
+    app: bunny-api
