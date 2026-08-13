@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: bunnywkwk/bunny-app:staging-3a3e725
+        image: bunnywkwk/bunny-app:staging-41d39da
         ports:
         - containerPort: 8000
         env:
