@@ -24,8 +24,6 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: POSTGRES_PASSWORD
-        - name: DATABASE_URL
-          value: "postgresql://postgres:supersecretdbpassword@postgres:5432/postgres"
 ---
 apiVersion: v1
 kind: Service
