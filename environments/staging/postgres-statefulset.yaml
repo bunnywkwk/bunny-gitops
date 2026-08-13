@@ -39,8 +39,10 @@ spec:
     spec:
       # WATCH OUT: Databases cannot be ReadWriteMany. Only one pod can mount the drive at a time.
       accessModes: [ "ReadWriteOnce" ]
-      # WHY LONGHORN: This magic line tells Longhorn to carve out space across your 3 nodes.
-      storageClassName: longhorn
+      # WHY storageClassName: Tells Kubernetes WHICH storage driver to use for dynamic provisioning.
+      # On Minikube: use 'standard' (hostPath provisioner, no multi-node replication).
+      # On real VMs: change to 'longhorn' to get data replication across nodes for HA.
+      storageClassName: standard
       resources:
         requests:
           storage: 1Gi
