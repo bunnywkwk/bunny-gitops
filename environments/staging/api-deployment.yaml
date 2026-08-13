@@ -19,15 +19,13 @@ spec:
         ports:
         - containerPort: 8000
         env:
-        # WATCH OUT: If the Python app starts before the Vault password is ready, it will crash.
-        # It will automatically restart and succeed once the secret finally appears.
-        - name: DATABASE_URL
-          value: "postgresql://postgres:$(POSTGRES_PASSWORD)@postgres:5432/postgres"
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-secret
               key: POSTGRES_PASSWORD
+        - name: DATABASE_URL
+          value: "postgresql://postgres:$(POSTGRES_PASSWORD)@postgres:5432/postgres"
 ---
 apiVersion: v1
 kind: Service
