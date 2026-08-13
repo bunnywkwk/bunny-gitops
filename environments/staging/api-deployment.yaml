@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: bunnywkwk/bunny-app:staging-placeholder
+        image: bunnywkwk/bunny-app:staging-3a3e725
         ports:
         - containerPort: 8000
         env:
@@ -25,7 +25,7 @@ spec:
               name: postgres-secret
               key: POSTGRES_PASSWORD
         - name: DATABASE_URL
-          value: "postgresql://postgres:$(POSTGRES_PASSWORD)@postgres:5432/postgres"
+          value: "postgresql://postgres:supersecretdbpassword@postgres:5432/postgres"
 ---
 apiVersion: v1
 kind: Service
