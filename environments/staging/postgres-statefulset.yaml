@@ -42,7 +42,7 @@ spec:
       # WHY storageClassName: Tells Kubernetes WHICH storage driver to use for dynamic provisioning.
       # On Minikube: use 'standard' (hostPath provisioner, no multi-node replication).
       # On real VMs: change to 'longhorn' to get data replication across nodes for HA.
-      storageClassName: standard
+      storageClassName: longhorn
       resources:
         requests:
           storage: 1Gi
